@@ -53,14 +53,16 @@ class App extends Component {
     event.preventDefault();
     const { accounts, contract } = this.state;
     await contract.methods.set(this.state.newValue).send({from: accounts[0]});
-    const response = await contract.methods.get();
+    const response = await contract.methods.get().call();
+
+    console.log(response);
     this.setState({storageValue:response});
   }
 
 
   runExample = async () => {
     const { contract } = this.state;
-    
+
     // Get the value from the contract to prove it worked.
     const response = await contract.methods.get().call();
 
